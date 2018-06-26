@@ -1,0 +1,45 @@
+buildscript {
+    ext {
+        depManagementVersion ="0.5.1.RELEASE"
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("io.spring.gradle:dependency-management-plugin:${depManagementVersion}")
+    }
+}
+
+allprojects {
+    group 'com.denis'
+    version '1.0-SNAPSHOT'
+}
+subprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+
+    }
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+
+    ext {
+        SL4J_VERSION = '1.7.10'
+        JUNIT_VERSION = '1.7'
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom 'io.spring.platform:platform-bom:1.1.2.RELEASE'
+        }
+    }
+    dependencies {
+        compile "org.slf4j-api:${SL4J_VERSION}"
+        compile "org.slf4j-log4j12:${SL4J_VERSION}"
+        testCompile "junit:junit:${JUNIT_VERSION}"
+    }
+}
